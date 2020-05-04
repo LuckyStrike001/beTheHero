@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "./Header";
+import "./global.css";
+import Logon from "./pages/Logon";
 
 function App() {
   return (
     <div className="App">
-      <Header>Meus amigos</Header>
-      <h1>Hello</h1>
+      <Logon>Meus amigos</Logon>
     </div>
   );
 }
