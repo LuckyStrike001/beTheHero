@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
+import api from "../../services/api";
 
 import "./styles.css";
 import { FiArrowLeft } from "react-icons/fi";
@@ -10,6 +12,32 @@ export default function NewIncident() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
+
+  const history = useHistory();
+
+  const ongId = localStorage.getItem("ongId");
+
+  async function handleIncident(e) {
+    e.preventDefault();
+
+    const data = {
+      title,
+      description,
+      value,
+    };
+
+    try {
+      await api.post("incidents", data, {
+        headers: {
+          Authorization: ongId,
+        },
+      });
+
+      history.push("/profile");
+    } catch {
+      alert("Error to try create incident, try again please");
+    }
+  }
 
   return (
     <div className="new-incident-container">
@@ -26,7 +54,7 @@ export default function NewIncident() {
             Go home
           </Link>
         </section>
-        <form>
+        <form onSubmit={handleIncident}>
           <input
             placeholder="Case title"
             value={title}
